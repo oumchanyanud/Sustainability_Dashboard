@@ -6,7 +6,9 @@ import { Label } from "@/components/ui/label"
 import { Card } from "@/components/ui/card"
 import { useCSVParser } from '../hooks/useCSVParser'
 
-export default function FileUploader({ onData }: { onData: (data: any[]) => void }) {
+type RowData = Record<string, string | number | boolean | null>
+
+export default function FileUploader({ onData }: { onData: (data: RowData[]) => void }) {
   const [error, setError] = useState('')
   const parseCSV = useCSVParser(onData, setError)
 

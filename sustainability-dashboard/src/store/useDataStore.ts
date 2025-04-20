@@ -2,12 +2,14 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 
+type RowData = Record<string, string | number | boolean | null>
+
 type DataStore = {
-  data: any[]
-  setData: (data: any[]) => void
+  data: RowData[]
+  setData: (data: RowData[]) => void
 }
 
-// Create store with persist so uploaded data survives page refresh
+// ✅ สร้าง store ที่เก็บ data แบบ type-safe
 export const useDataStore = create<DataStore>()(
   persist(
     (set) => ({

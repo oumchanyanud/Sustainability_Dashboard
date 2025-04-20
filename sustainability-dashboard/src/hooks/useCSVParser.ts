@@ -1,23 +1,29 @@
-// Custom hook to parse CSV file and return first 10 rows
-import Papa from 'papaparse'
+// Custom hook to parse CSV file and return parsed data using PapaParse
+import Papa, { ParseResult } from 'papaparse'
 
-export function useCSVParser(onLoad: (data: any[]) => void, onError: (msg: string) => void) {
+type RowData = Record<string, string | number | boolean | null>
+
+export function useCSVParser(
+  onLoad: (data: RowData[]) => void,
+  onError: (msg: string) => void
+) {
   return (file: File) => {
     // Check for valid CSV format
     if (file.type !== 'text/csv') {
-      onError('Invalid file format');
-      return;
+      onError('Invalid file format')
+      return
     }
 
     // Parse CSV using PapaParse
-    Papa.parse(file, {
+    Papa.parse<RowData>(file, {
       header: true,
-      complete: (results) => {
-        // Load only first 10 rows
-        onLoad(results.data);
-        onError('');
+      dynamicTyping: true,
+      complete: (results: ParseResult<RowData>) => {
+        // Load all rows (or first 10 rows if you want)
+        onLoad(results.data)
+        onError('')
       },
       error: () => onError('Failed to parse CSV.')
-    });
+    })
   }
 }

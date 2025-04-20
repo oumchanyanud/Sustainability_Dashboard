@@ -3,7 +3,9 @@
 import Papa from 'papaparse'
 import { Button } from '@/components/ui/button'
 
-export default function ExportButton({ data }: { data: any[] }) {
+type RowData = Record<string, string | number | boolean | null>
+
+export default function ExportButton({ data }: { data: RowData[] }) {
   const handleExport = () => {
     // Convert JSON to CSV string
     const csv = Papa.unparse(data)

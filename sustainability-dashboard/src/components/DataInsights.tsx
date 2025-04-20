@@ -1,7 +1,9 @@
 'use client'
 import React from 'react'
 
-export default function DataInsights({ data }: { data: any[] }) {
+type RowData = Record<string, string | number | boolean | null>
+
+export default function DataInsights({ data }: { data: RowData[] }) {
   const total = data.length
   const keys = data.length > 0 ? Object.keys(data[0]) : []
 

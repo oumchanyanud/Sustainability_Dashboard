@@ -7,10 +7,12 @@ import {
 import { Button } from '@/components/ui/button'
 import FilterControls from '@/components/FilterControls'
 
+type RowData = Record<string, string | number | boolean | null>
+
 const ROWS_PER_PAGE = 10
 
-export default function DataTable({ data }: { data: any[] }) {
-  const [filters, setFilters] = useState<{ [key: string]: string }>({})
+export default function DataTable({ data }: { data: RowData[] }) {
+  const [filters, setFilters] = useState<Record<string, string>>({})
   const [page, setPage] = useState(0)
 
   const columns = useMemo(() => (data.length > 0 ? Object.keys(data[0]) : []), [data])

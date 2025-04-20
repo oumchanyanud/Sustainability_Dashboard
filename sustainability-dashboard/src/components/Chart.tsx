@@ -7,7 +7,9 @@ import {
 } from 'recharts'
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from '@/components/ui/select'
 
-export default function Chart({ data }: { data: any[] }) {
+type RowData = Record<string, string | number | boolean | null>
+
+export default function Chart({ data }: { data: RowData[] }) {
   const [column, setColumn] = useState<string | null>(null)
 
   const numericColumns = Object.keys(data[0] || {}).filter((key) =>
@@ -18,11 +20,11 @@ export default function Chart({ data }: { data: any[] }) {
     if (!column && numericColumns.length > 0) {
       setColumn(numericColumns[0])
     }
-  }, [numericColumns])
+  }, [column, numericColumns])
 
   if (!column) return <p className="text-red-500">No numeric column found for chart.</p>
 
-  const grouped = data.reduce((acc: Record<string, number>, row: any) => {
+  const grouped = data.reduce((acc: Record<string, number>, row: RowData) => {
     const key = row[column]?.toString()
     if (key) {
       acc[key] = (acc[key] || 0) + 1

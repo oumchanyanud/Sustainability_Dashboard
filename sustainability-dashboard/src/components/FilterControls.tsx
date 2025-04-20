@@ -1,4 +1,4 @@
-'use client'
+ 'use client'
 import React from 'react'
 import { Input } from '@/components/ui/input'
 import { Checkbox } from '@/components/ui/checkbox'
@@ -6,8 +6,8 @@ import { Label } from '@/components/ui/label'
 
 type Props = {
   columns: string[]
-  filters: { [key: string]: string }
-  setFilters: (v: any) => void
+  filters: Record<string, string>
+  setFilters: (v: Record<string, string>) => void
 }
 
 export default function FilterControls({ columns, filters, setFilters }: Props) {
